@@ -7,8 +7,11 @@
     tools:context="com.example.drklrd.photaharu.PostActivity">
     
     <ImageButton
+        android:id="@+id/selectedImage"
         android:layout_width="match_parent"
         android:layout_height="250dp"
+        android:background="@drawable/addimage"
+        android:onClick="pickImage"
         />
 
     <EditText
