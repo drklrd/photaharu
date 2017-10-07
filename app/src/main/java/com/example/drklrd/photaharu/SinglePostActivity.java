@@ -14,6 +14,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 public class SinglePostActivity extends AppCompatActivity {
 
@@ -53,7 +54,7 @@ public class SinglePostActivity extends AppCompatActivity {
 
                 singleTitle.setText(post_title);
                 singleDescription.setText(post_desc);
-//                Picasso.with(SinglePostActivity.this).load(post_image).into(singleImage);
+                Picasso.with(SinglePostActivity.this).load(post_image).into(singleImage);
                 if(mAuth.getCurrentUser().getUid().equals(post_uid)){
                     deletePostButton.setVisibility(View.VISIBLE);
                 }

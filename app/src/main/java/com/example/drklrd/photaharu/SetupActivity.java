@@ -96,6 +96,8 @@ public class SetupActivity extends AppCompatActivity {
                     String downloadUrl = taskSnapshot.getDownloadUrl().toString();
                     mDatabaseusers.child(user_id).child("name").setValue(name);
                     mDatabaseusers.child(user_id).child("image").setValue(downloadUrl);
+                    Intent mainIntent = new Intent(SetupActivity.this,MainActivity.class);
+                    startActivity(mainIntent);
                 }
             });
 

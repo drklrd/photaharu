@@ -1,5 +1,6 @@
 package com.example.drklrd.photaharu;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,12 +14,14 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -70,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 viewHolder.setTitle(model.getTitle());
                 viewHolder.setDescription(model.getDescription());
                 viewHolder.setUsername(model.getUsername());
+                viewHolder.setImage(getApplicationContext(),model.getImage());
 
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -113,6 +117,11 @@ public class MainActivity extends AppCompatActivity {
         public void setUsername(String username){
             TextView postUser = (TextView) mView.findViewById(R.id.postUser);
             postUser.setText(username);
+        }
+
+        public void setImage(Context ctx, String image){
+            ImageView post_image = (ImageView) mView.findViewById(R.id.postImage);
+            Picasso.with(ctx).load(image).into(post_image);
         }
     }
 

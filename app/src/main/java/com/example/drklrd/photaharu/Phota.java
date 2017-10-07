@@ -12,11 +12,11 @@ public class Phota {
 
     }
 
-    public Phota(String title, String description,String username){
+    public Phota(String title, String description, String image,String username){
         this.title = title;
         this.description = description;
         this.username =  username;
-//        this.image = image;
+        this.image = image;
     }
 
     public String getTitle(){
