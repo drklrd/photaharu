@@ -1,10 +1,14 @@
 package com.example.drklrd.photaharu;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -18,6 +22,9 @@ public class SinglePostActivity extends AppCompatActivity {
     private ImageView singleImage;
     private TextView singleTitle;
     private TextView singleDescription;
+    private Button deletePostButton;
+    private FirebaseAuth mAuth;
+
 
 
     @Override
@@ -32,6 +39,10 @@ public class SinglePostActivity extends AppCompatActivity {
         singleDescription = (TextView) findViewById(R.id.singleDescription);
         singleImage = (ImageView) findViewById(R.id.singleImage);
 
+        mAuth = FirebaseAuth.getInstance();
+        deletePostButton = (Button) findViewById(R.id.singleDelete);
+        deletePostButton.setVisibility(View.INVISIBLE);
+
         mDatabase.child(post_key).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -43,6 +54,9 @@ public class SinglePostActivity extends AppCompatActivity {
                 singleTitle.setText(post_title);
                 singleDescription.setText(post_desc);
 //                Picasso.with(SinglePostActivity.this).load(post_image).into(singleImage);
+                if(mAuth.getCurrentUser().getUid().equals(post_uid)){
+                    deletePostButton.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
@@ -50,5 +64,11 @@ public class SinglePostActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void deletePost(View view){
+        mDatabase.child(post_key).removeValue();
+        Intent mainIntent = new Intent(SinglePostActivity.this,MainActivity.class);
+        startActivity(mainIntent);
     }
 }
