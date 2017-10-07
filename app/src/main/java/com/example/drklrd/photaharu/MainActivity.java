@@ -64,9 +64,21 @@ public class MainActivity extends AppCompatActivity {
         ) {
             @Override
             protected void populateViewHolder(PhotaViewHolder viewHolder, Phota model, int position) {
+
+                final String post_key = getRef(position).getKey().toString();
+
                 viewHolder.setTitle(model.getTitle());
                 viewHolder.setDescription(model.getDescription());
                 viewHolder.setUsername(model.getUsername());
+
+                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent singlePostActivity = new Intent(MainActivity.this,SinglePostActivity.class);
+                        singlePostActivity.putExtra("PostId",post_key);
+                        startActivity(singlePostActivity);
+                    }
+                });
             }
         };
         photaHaruList.setAdapter(FBRA);
@@ -81,23 +93,25 @@ public class MainActivity extends AppCompatActivity {
 
     public static class PhotaViewHolder extends RecyclerView.ViewHolder{
 
+        View mView;
+
         public PhotaViewHolder(View itemView){
             super(itemView);
-            View mView = itemView;
+            mView = itemView;
         }
 
         public void setTitle(String title){
-            TextView postTitle = (TextView) itemView.findViewById(R.id.imageTitle);
+            TextView postTitle = (TextView) mView.findViewById(R.id.imageTitle);
             postTitle.setText(title);
         }
 
         public void setDescription(String description){
-            TextView postDescription = (TextView) itemView.findViewById(R.id.imageDescription);
+            TextView postDescription = (TextView) mView.findViewById(R.id.imageDescription);
             postDescription.setText(description);
         }
 
         public void setUsername(String username){
-            TextView postUser = (TextView) itemView.findViewById(R.id.postUser);
+            TextView postUser = (TextView) mView.findViewById(R.id.postUser);
             postUser.setText(username);
         }
     }
