@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "602297612131",
+    "firebase_url": "https://photaharu-f08a0.firebaseio.com",
+    "project_id": "photaharu-f08a0",
+    "storage_bucket": "photaharu-f08a0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:602297612131:android:59181272147eebdb",
+        "android_client_info": {
+          "package_name": "com.example.drklrd.photaharu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "602297612131-k8lhru4k5okmf7pc38ro5urupr8u195n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.drklrd.photaharu",
+            "certificate_hash": "14896cbc011774eac7c51ecb7a4b7674995c1ef0"
+          }
+        },
+        {
+          "client_id": "602297612131-5hm5huh818b6lg8jga7btderl47ha6u2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAG9fNVWURX6UN5DdexOl8DGYnU6Kk1zFA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "602297612131-5hm5huh818b6lg8jga7btderl47ha6u2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
