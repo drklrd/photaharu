@@ -3,8 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.drklrd.photaharu.MainActivity">
     <item
+        android:id="@+id/add"
+        android:orderInCategory="1"
+        android:icon="@drawable/addicon"
+        android:title="Add"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/action_settings"
-        android:orderInCategory="100"
+        android:orderInCategory="2"
         android:title="@string/action_settings"
         app:showAsAction="never" />
 </menu>
