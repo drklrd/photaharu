@@ -49,7 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
                         String user_id = mAuth.getCurrentUser().getUid();
                         DatabaseReference current_user_db = mDatabase.child(user_id);
                         current_user_db.child("Name").setValue(name);
-                        Intent mainIntent = new Intent(RegisterActivity.this,LoginActivity.class);
+                        Intent mainIntent = new Intent(RegisterActivity.this,SetupActivity.class);
                         mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(mainIntent);
                     }

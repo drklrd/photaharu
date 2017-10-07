@@ -27,5 +27,7 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".SetupActivity"></activity>
     </application>
+    <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+        android:theme="@style/Base.Theme.AppCompat"/>
 
 </manifest>
