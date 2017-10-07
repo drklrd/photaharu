@@ -8,10 +8,14 @@ public class Phota {
 
     private String title,description,image;
 
-    public Phota(String title, String description, String image){
+    public Phota(){
+        
+    }
+
+    public Phota(String title, String description){
         this.title = title;
         this.description = description;
-        this.image = image;
+//        this.image = image;
     }
 
     public String getTitle(){
