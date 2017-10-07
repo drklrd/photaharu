@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         photaHaruList = (RecyclerView) findViewById(R.id.photoHaruList);
         photaHaruList.setHasFixedSize(true);
         photaHaruList.setLayoutManager(new LinearLayoutManager(this));
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Photaharu");
     }
 
     @Override
@@ -44,7 +46,8 @@ public class MainActivity extends AppCompatActivity {
         ) {
             @Override
             protected void populateViewHolder(PhotaViewHolder viewHolder, Phota model, int position) {
-
+                viewHolder.setTitle(model.getTitle());
+                viewHolder.setDescription(model.getDescription());
             }
         };
         photaHaruList.setAdapter(FBRA);
@@ -57,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    public class PhotaViewHolder extends RecyclerView.ViewHolder{
+    public static class PhotaViewHolder extends RecyclerView.ViewHolder{
 
         public PhotaViewHolder(View itemView){
             super(itemView);
