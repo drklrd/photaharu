@@ -15,6 +15,7 @@
         />
 
     <EditText
+        android:id="@+id/imageTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter title"
@@ -23,6 +24,7 @@
         android:layout_margin="10dp"
         />
     <EditText
+        android:id="@+id/imageDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter description"
