@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -15,44 +16,41 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class RegisterActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
-    private EditText nameField;
     private EditText emailField;
     private EditText passField;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_login);
 
-        nameField = (EditText) findViewById(R.id.nameField);
         emailField = (EditText) findViewById(R.id.emailField);
         passField = (EditText) findViewById(R.id.passField);
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
+
     }
 
-    public void registerUser(View view){
-        final String name = nameField.getText().toString().trim();
+    public void login(View view){
         String email = emailField.getText().toString().trim();
         String pass = passField.getText().toString().trim();
-        if(!TextUtils.isEmpty(name) && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(pass)){
-            mAuth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
+        if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(pass)){
+            mAuth.signInWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
-                        String user_id = mAuth.getCurrentUser().getUid();
-                        DatabaseReference current_user_db = mDatabase.child(user_id);
-                        current_user_db.child("Name").setValue(name);
-                        Intent mainIntent = new Intent(RegisterActivity.this,LoginActivity.class);
-                        mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(mainIntent);
+                        Intent loginIntent = new Intent(LoginActivity.this,MainActivity.class);
+                        startActivity(loginIntent);
+                    }else{
+                        Toast.makeText(LoginActivity.this, "Could not login in !",Toast.LENGTH_SHORT).show();
                     }
+
                 }
             });
         }
