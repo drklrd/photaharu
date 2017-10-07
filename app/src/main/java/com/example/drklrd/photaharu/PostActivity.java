@@ -11,6 +11,8 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -23,6 +25,8 @@ public class PostActivity extends AppCompatActivity {
     private EditText imageTitle;
     private EditText imageDescription;
     private StorageReference storageReference;
+    private FirebaseDatabase database;
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +35,7 @@ public class PostActivity extends AppCompatActivity {
         imageTitle = (EditText) findViewById(R.id.imageTitle);
         imageDescription = (EditText) findViewById(R.id.imageDescription);
         storageReference = FirebaseStorage.getInstance().getReference();
+        databaseReference = database.getInstance().getReference().child("Photaharu");
     }
 
     public void pickImage(View view){
@@ -50,15 +55,21 @@ public class PostActivity extends AppCompatActivity {
     }
 
     public void postNew(View view){
-        String title = imageTitle.getText().toString().trim();
-        String description = imageDescription.getText().toString().trim();
+
+        final String title = imageTitle.getText().toString().trim();
+        final String description = imageDescription.getText().toString().trim();
+
         if(!TextUtils.isEmpty(title) && !TextUtils.isEmpty(description)){
            StorageReference filePath = storageReference.child("PostImage").child(uri.getLastPathSegment());
             filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
                     Toast.makeText(PostActivity.this,"Successfully uploaded !",Toast.LENGTH_LONG).show();
+                    DatabaseReference newPost = databaseReference.push();
+                    newPost.child("title").setValue(title);
+                    newPost.child("description").setValue(description);
+                    newPost.child("image").setValue(downloadUrl.toString());
                 }
             });
         }
