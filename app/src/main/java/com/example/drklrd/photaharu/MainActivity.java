@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
             protected void populateViewHolder(PhotaViewHolder viewHolder, Phota model, int position) {
                 viewHolder.setTitle(model.getTitle());
                 viewHolder.setDescription(model.getDescription());
+                viewHolder.setUsername(model.getUsername());
             }
         };
         photaHaruList.setAdapter(FBRA);
@@ -93,6 +94,11 @@ public class MainActivity extends AppCompatActivity {
         public void setDescription(String description){
             TextView postDescription = (TextView) itemView.findViewById(R.id.imageDescription);
             postDescription.setText(description);
+        }
+
+        public void setUsername(String username){
+            TextView postUser = (TextView) itemView.findViewById(R.id.postUser);
+            postUser.setText(username);
         }
     }
 

@@ -30,6 +30,13 @@
             android:text="Post Description"
             android:layout_margin="5dp"
             android:id="@+id/imageDescription"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="User"
+            android:layout_margin="5dp"
+            android:id="@+id/postUser"/>
         
     </LinearLayout>
 

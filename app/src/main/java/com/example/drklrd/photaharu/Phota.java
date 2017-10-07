@@ -6,15 +6,16 @@ package com.example.drklrd.photaharu;
 
 public class Phota {
 
-    private String title,description,image;
+    private String title,description,image,username;
 
     public Phota(){
 
     }
 
-    public Phota(String title, String description){
+    public Phota(String title, String description,String username){
         this.title = title;
         this.description = description;
+        this.username =  username;
 //        this.image = image;
     }
 
@@ -24,6 +25,14 @@ public class Phota {
 
     public String getDescription(){
         return description;
+    }
+
+    public  String getUsername(){
+        return username;
+    }
+
+    public void setUsername(String username){
+        this.username = username;
     }
 
     public String getImage(){
