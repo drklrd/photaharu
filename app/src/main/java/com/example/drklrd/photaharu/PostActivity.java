@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -60,18 +61,29 @@ public class PostActivity extends AppCompatActivity {
         final String description = imageDescription.getText().toString().trim();
 
         if(!TextUtils.isEmpty(title) && !TextUtils.isEmpty(description)){
-           StorageReference filePath = storageReference.child("PostImage").child(uri.getLastPathSegment());
-            filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                    Toast.makeText(PostActivity.this,"Successfully uploaded !",Toast.LENGTH_LONG).show();
-                    DatabaseReference newPost = databaseReference.push();
-                    newPost.child("title").setValue(title);
-                    newPost.child("description").setValue(description);
-                    newPost.child("image").setValue(downloadUrl.toString());
-                }
-            });
+
+            if(uri != null){
+                StorageReference filePath = storageReference.child("PostImage").child(uri.getLastPathSegment());
+                filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                        Toast.makeText(PostActivity.this,"Successfully uploaded !",Toast.LENGTH_LONG).show();
+                        DatabaseReference newPost = databaseReference.push();
+                        newPost.child("title").setValue(title);
+                        newPost.child("description").setValue(description);
+                        newPost.child("image").setValue(downloadUrl.toString());
+                    }
+                });
+            }else{
+                Log.i("HERE***********","NICEEEEEE");
+                DatabaseReference newPost = databaseReference.push();
+                newPost.child("title").setValue(title);
+                newPost.child("description").setValue(description);
+                Log.i("HERE***********","NICEEEEEE222");
+                Toast.makeText(PostActivity.this,"Successfully uploaded !",Toast.LENGTH_LONG).show();
+            }
+
         }
     }
 }

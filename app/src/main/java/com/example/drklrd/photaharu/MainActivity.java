@@ -38,19 +38,19 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        FirebaseRecyclerAdapter<Phota,PhotaViewHolder> FBRA = new FirebaseRecyclerAdapter<Phota, PhotaViewHolder>(
-                Phota.class,
-                R.layout.photo_row,
-                PhotaViewHolder.class,
-                mDatabase
-        ) {
-            @Override
-            protected void populateViewHolder(PhotaViewHolder viewHolder, Phota model, int position) {
-                viewHolder.setTitle(model.getTitle());
-                viewHolder.setDescription(model.getDescription());
-            }
-        };
-        photaHaruList.setAdapter(FBRA);
+//        FirebaseRecyclerAdapter<Phota,PhotaViewHolder> FBRA = new FirebaseRecyclerAdapter<Phota, PhotaViewHolder>(
+//                Phota.class,
+//                R.layout.photo_row,
+//                PhotaViewHolder.class,
+//                mDatabase
+//        ) {
+//            @Override
+//            protected void populateViewHolder(PhotaViewHolder viewHolder, Phota model, int position) {
+//                viewHolder.setTitle(model.getTitle());
+//                viewHolder.setDescription(model.getDescription());
+//            }
+//        };
+//        photaHaruList.setAdapter(FBRA);
     }
 
     @Override
