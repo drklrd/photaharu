@@ -9,7 +9,7 @@ public class Phota {
     private String title,description,image;
 
     public Phota(){
-        
+
     }
 
     public Phota(String title, String description){
