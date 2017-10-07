@@ -52,30 +52,36 @@ public class SetupActivity extends AppCompatActivity {
         startActivityForResult(galleryIntent,GALLERY_REQ);
     }
 
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.i("Content Pickerd","PICKER ####...");
-
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == GALLERY_REQ && resultCode == RESULT_OK){
-            Log.i("Staring Cropping","cropping...");
-            Uri imageUri = data.getData();
-            CropImage.activity(imageUri)
-                    .setGuidelines(CropImageView.Guidelines.ON)
-                    .setAspectRatio(1,1)
-                    .start(this);
+
+        if(requestCode == 111 && resultCode == RESULT_OK){
+            mImageUri = data.getData();
+            profileImage.setImageURI(mImageUri);
         }
 
-        if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
-            Log.i("DOne Cropping","cropped...");
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if(resultCode == RESULT_OK){
-                mImageUri = result.getUri();
-                profileImage.setImageURI(mImageUri);
-            }else if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE){
-                Exception error = result.getError();
-            }
-        }
+//        if(requestCode == GALLERY_REQ && resultCode == RESULT_OK){
+//            Log.i("Staring Cropping","cropping...");
+//            Uri imageUri = data.getData();
+//            CropImage.activity(imageUri)
+//                    .setGuidelines(CropImageView.Guidelines.ON)
+//                    .setAspectRatio(1,1)
+//                    .start(this);
+//        }
+//
+//        if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
+//            Log.i("DOne Cropping","cropped...");
+//            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+//            if(resultCode == RESULT_OK){
+//                mImageUri = result.getUri();
+//                profileImage.setImageURI(mImageUri);
+//            }else if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE){
+//                Exception error = result.getError();
+//            }
+//        }
     }
 
     public void doneSetup(View view){
