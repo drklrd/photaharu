@@ -15,11 +15,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter title"
+        android:background="@drawable/editshape"
+        android:padding="10dp"
+        android:layout_margin="10dp"
         />
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter description"
+        android:background="@drawable/editshape"
+        android:padding="10dp"
+        android:layout_margin="10dp"
         />
 
     <Button
@@ -27,5 +33,6 @@
         android:layout_height="wrap_content"
         android:text="Post"
         android:onClick="postNew"
+        android:layout_margin="10dp"
         />
 </LinearLayout>
