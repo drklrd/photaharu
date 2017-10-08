@@ -14,6 +14,7 @@
         android:layout_height="wrap_content" />
 
     <EditText
+        android:inputType="textPassword"
         android:id="@+id/passField"
         android:hint="Password"
         android:layout_width="match_parent"
@@ -22,6 +23,12 @@
     <Button
         android:text="Login"
         android:onClick="login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ProgressBar
+        android:id="@+id/loginProgress"
+        android:visibility="invisible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

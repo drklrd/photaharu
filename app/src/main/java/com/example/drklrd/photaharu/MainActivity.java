@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
+    ProgressBar postsLoadProgress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
         photaHaruList.setHasFixedSize(true);
         photaHaruList.setLayoutManager(new LinearLayoutManager(this));
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Photaharu");
+
+        postsLoadProgress = (ProgressBar) findViewById(R.id.postsLoadProgress);
 
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -59,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
+        postsLoadProgress.setVisibility(View.VISIBLE);
         FirebaseRecyclerAdapter<Phota,PhotaViewHolder> FBRA = new FirebaseRecyclerAdapter<Phota, PhotaViewHolder>(
                 Phota.class,
                 R.layout.photo_row,
@@ -83,8 +89,10 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(singlePostActivity);
                     }
                 });
+                postsLoadProgress.setVisibility(View.INVISIBLE);
             }
         };
+
         photaHaruList.setAdapter(FBRA);
     }
 

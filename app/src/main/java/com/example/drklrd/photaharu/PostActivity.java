@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -43,6 +44,8 @@ public class PostActivity extends AppCompatActivity {
     private DatabaseReference mDatabaseUsers;
     private FirebaseUser mCurrentUser;
 
+    ProgressBar postProgress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +59,8 @@ public class PostActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mCurrentUser = mAuth.getCurrentUser();
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
+
+        postProgress = (ProgressBar) findViewById(R.id.postProgress);
     }
 
     public void pickImage(View view){
@@ -85,7 +90,7 @@ public class PostActivity extends AppCompatActivity {
         final String description = imageDescription.getText().toString().trim();
 
         if(!TextUtils.isEmpty(title) && !TextUtils.isEmpty(description)){
-
+            postProgress.setVisibility(View.VISIBLE);
             if(uri != null){
                 StorageReference filePath = storageReference.child("PostImage").child(uri.getLastPathSegment());
                 filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -105,6 +110,7 @@ public class PostActivity extends AppCompatActivity {
                                 newPost.child("username").setValue(dataSnapshot.child("name").getValue()).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
+                                        postProgress.setVisibility(View.INVISIBLE);
                                         if(task.isSuccessful()){
                                             Intent mainActivityIntent = new Intent(PostActivity.this,MainActivity.class);
                                             startActivity(mainActivityIntent);
@@ -133,6 +139,7 @@ public class PostActivity extends AppCompatActivity {
                         newPost.child("username").setValue(dataSnapshot.child("name").getValue()).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
+                                postProgress.setVisibility(View.INVISIBLE);
                                 if(task.isSuccessful()){
                                     Intent mainActivityIntent = new Intent(PostActivity.this,MainActivity.class);
                                     startActivity(mainActivityIntent);

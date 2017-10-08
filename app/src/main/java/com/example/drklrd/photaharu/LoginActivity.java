@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,6 +24,9 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
+    ProgressBar loginProgress;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +38,9 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
 
+        loginProgress = (ProgressBar) findViewById(R.id.loginProgress);
+
+
     }
 
     public void login(View view){
@@ -41,9 +48,11 @@ public class LoginActivity extends AppCompatActivity {
         String pass = passField.getText().toString().trim();
 
         if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(pass)){
+            loginProgress.setVisibility(View.VISIBLE);
             mAuth.signInWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
+                    loginProgress.setVisibility(View.INVISIBLE);
                     if(task.isSuccessful()){
                         Intent loginIntent = new Intent(LoginActivity.this,MainActivity.class);
                         startActivity(loginIntent);

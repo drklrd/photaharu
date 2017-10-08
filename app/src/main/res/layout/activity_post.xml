@@ -40,4 +40,10 @@
         android:onClick="postNew"
         android:layout_margin="10dp"
         />
+
+    <ProgressBar
+        android:id="@+id/postProgress"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>
