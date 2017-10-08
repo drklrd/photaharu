@@ -1,6 +1,7 @@
 package com.example.drklrd.photaharu;
 
 import android.content.Intent;
+import android.media.Image;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -25,12 +26,14 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 public class PostActivity extends AppCompatActivity {
 
     private static final int GALLERY_REQUEST =222;
     private Uri uri = null;
-    private ImageButton imageButton;
+    private ImageButton selectedImage;
     private EditText imageTitle;
     private EditText imageDescription;
     private StorageReference storageReference;
@@ -46,6 +49,7 @@ public class PostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post);
         imageTitle = (EditText) findViewById(R.id.imageTitle);
         imageDescription = (EditText) findViewById(R.id.imageDescription);
+        selectedImage = (ImageButton) findViewById(R.id.selectedImage);
         storageReference = FirebaseStorage.getInstance().getReference();
         databaseReference = database.getInstance().getReference().child("Photaharu");
 
@@ -55,18 +59,23 @@ public class PostActivity extends AppCompatActivity {
     }
 
     public void pickImage(View view){
-        Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
-        galleryIntent.setType("Image/*");
-        startActivityForResult(galleryIntent,GALLERY_REQUEST);
+        CropImage.activity()
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setAspectRatio(1,1)
+                .start(this);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 222 && resultCode == RESULT_OK){
-            uri = data.getData();
-            imageButton = (ImageButton) findViewById(R.id.selectedImage);
-            imageButton.setImageURI(uri);
+        if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if(resultCode == RESULT_OK){
+                uri = result.getUri();
+                selectedImage.setImageURI(uri);
+            }else if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE){
+                Exception error = result.getError();
+            }
         }
     }
 
@@ -114,7 +123,6 @@ public class PostActivity extends AppCompatActivity {
                     }
                 });
             }else{
-                Log.i("HERE***********","NICEEEEEE");
                 final DatabaseReference newPost = databaseReference.push();
                 mDatabaseUsers.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -132,7 +140,6 @@ public class PostActivity extends AppCompatActivity {
                             }
                         });
                     }
-
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
 
