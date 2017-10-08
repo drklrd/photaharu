@@ -29,4 +29,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <Button
+        android:text="Already have an account ? Sign in"
+        android:onClick="proceedToLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>
